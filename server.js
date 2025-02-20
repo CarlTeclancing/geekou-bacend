@@ -1,14 +1,20 @@
-// server.js (Main Server File)
-const express = require('express');
-const connect = require('./db');
-const authRoutes = require('./auth');
-require('dotenv').config();
+const express = require("express");
+const dotenv = require("dotenv");
+dotenv.config();
+const cors = require("cors");
+const connectDB = require("./db/db");
+const port = process.env.PORT;
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
-connect();
 
+app.use(cors());
 app.use(express.json());
-app.use('./auth', authRoutes);
+app.use(express.urlencoded({ extended: false }));
+app.use("/", authRoutes);
 
-const PORT = 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+connectDB();
+
+app.listen(port, () => {
+  console.log(`Server running on port: ${port}`);
+});
