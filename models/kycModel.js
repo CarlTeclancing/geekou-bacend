@@ -16,6 +16,7 @@ const Kyc = sequelize.define('profiles' ,{
             key:'id'
         }
     },
+    verified:{type:Sequelize.BOOLEAN, default:false},
 
     fullName:{type:Sequelize.STRING},
     dob:{type:Sequelize.DATE},

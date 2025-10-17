@@ -2,22 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 dotenv.config();
 const cors = require("cors");
-// const sequelize = require('./config/database');
 const sequelize = require('./db');
-
-// const connectDB = require("./db/db");
-
-
-
-// async function connectDB() {
-//   try {
-//     await sequelize.authenticate();
-//     console.log('Database connection has been established successfully.');
-//   } catch (error) {
-//     console.error('Unable to connect to the database:', error);
-//   }
-// }
-// connectDB();
 
 
 const PORT = process.env.PORT;
@@ -28,12 +13,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+const isAuthenticated = require("./middleware/isAuthenticated");
 const authRoutes = require("./routes/authRoutes");
 const kycRoutes = require('./routes/kycRoutes')
+const cardRoutes = require('./routes/cardsRoutes');
+const transactionRoutes = require('./routes/transactionRoutes')
 
 app.use("/api/auth", authRoutes);
 app.use("/api/kyc", kycRoutes);
-
+app.use("/api/card" ,isAuthenticated ,cardRoutes)
+app.use("/api/transaction" ,isAuthenticated ,transactionRoutes)
 
 
 async function initializeAndStartServer() {
@@ -61,8 +50,3 @@ async function initializeAndStartServer() {
 }
 
 initializeAndStartServer(); 
-// connectDB();
-
-// app.listen(PORT, () => {
-//   console.log(`Server running on port: ${PORT}`);
-// });

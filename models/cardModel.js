@@ -5,7 +5,7 @@ const User = require('./userModel')
 const Card = sequelize.define('cards' ,{
     id:{
         type:Sequelize.INTEGER,
-        preimaryKey:true,
+        primaryKey:true,
         autoIncrement:true
     },
     userId:{
