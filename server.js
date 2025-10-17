@@ -29,10 +29,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const authRoutes = require("./routes/authRoutes");
-const profileRoutes = require('./routes/profileRoutes')
+const kycRoutes = require('./routes/kycRoutes')
 
 app.use("/api/auth", authRoutes);
-app.use("/api/profile", profileRoutes);
+app.use("/api/kyc", kycRoutes);
 
 
 

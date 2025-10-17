@@ -1,6 +1,6 @@
-const Profile = require('../models/profileModel')
+const Kyc = require('../models/kycModel')
 
-const addProfile = async (req ,res) => {
+const addKyc = async (req ,res) => {
     try{
         const {} = req.body
         
@@ -13,7 +13,7 @@ const addProfile = async (req ,res) => {
 }
 
 
-const getProfile = async (req ,res) => {
+const getKyc = async (req ,res) => {
     try{
 
     }
@@ -25,7 +25,7 @@ const getProfile = async (req ,res) => {
 
 
 
-const getAllProfile = async (req ,res) => {
+const getAllKyc = async (req ,res) => {
     try{
 
     }
@@ -36,7 +36,7 @@ const getAllProfile = async (req ,res) => {
 }
 
 
-const updateProfile = async (req ,res) => {
+const updateKyc = async (req ,res) => {
     try{
 
     }
@@ -46,7 +46,7 @@ const updateProfile = async (req ,res) => {
     }
 }
 
-const deleteProfile = async (req ,res) => {
+const deleteKyc = async (req ,res) => {
     try{
 
     }
@@ -57,4 +57,4 @@ const deleteProfile = async (req ,res) => {
 }
 
 
-module.exports = {addProfile, getAllProfile ,getProfile ,deleteProfile ,updateProfile}
+module.exports = {addKyc, getAllKyc ,getKyc ,deleteKyc ,updateKyc}

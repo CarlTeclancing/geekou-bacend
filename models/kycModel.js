@@ -2,7 +2,8 @@ const sequelize = require('../db')
 const Sequelize = require('sequelize')
 const User = require('./userModel')
 
-const Profile = sequelize.define('profiles' ,{
+// table name:Profile
+const Kyc = sequelize.define('profiles' ,{
     id:{
         type:Sequelize.INTEGER,
         primaryKey:true,
@@ -26,4 +27,4 @@ const Profile = sequelize.define('profiles' ,{
     niu:{type:Sequelize.STRING},
 })
 
-module.exports = Profile
+module.exports = Kyc
