@@ -16,6 +16,7 @@ const Kyc = sequelize.define('profiles' ,{
             key:'id'
         }
     },
+    status:{type:Sequelize.STRING ,enum:['pending' ,'failed', 'success'] ,default:'pending'},
     verified:{type:Sequelize.BOOLEAN, default:false},
 
     fullName:{type:Sequelize.STRING},
@@ -23,6 +24,7 @@ const Kyc = sequelize.define('profiles' ,{
     location:{type:Sequelize.STRING},
     idNumber:{type:Sequelize.STRING},
     phoneNumber:{type:Sequelize.STRING},
+    // files
     idCardFront:{type:Sequelize.STRING},
     idCardBack:{type:Sequelize.STRING},
     niu:{type:Sequelize.STRING},

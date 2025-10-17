@@ -18,7 +18,7 @@ const isAuthenticated = async(req ,res ,next)=>{
         if(user){
             const exists = User.findOne({where:{email:user?.email}})
             if(exists){
-                req.id = user.id
+                req.user = user.id
                 next()
             }else{ return res.status(401).json({error:'Un-authorised'}) }
         }else{ return res.status(401).json({error:'Un-authorised'}) }

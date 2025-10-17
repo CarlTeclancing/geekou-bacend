@@ -45,11 +45,12 @@ const login =async(req ,res)=>{
                 console.log("there are equal");
                 
                 const token = await jwt.sign(user ,process.env.SECRET_TOKEN_KEY)
-                tmp.token = token;
-                await tmp.save()
+                // tmp.token = token;
+                // await tmp.save()
                 const data = user
                 delete data.password
-                return res.status(200).json({user:data})
+                delete data.token
+                return res.status(200).json({ access_token:token,user:data})
             }else{
                 return res.status(401).json({error:'Invalid email or password'})
             } 

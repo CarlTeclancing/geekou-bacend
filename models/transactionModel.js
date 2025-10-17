@@ -8,6 +8,13 @@ const Transaction = sequelize.define('transactions' ,{
         primaryKey:true,
         autoIncrement:true
     },
+    userId:{
+        type:Sequelize.INTEGER,
+        references:{
+            model:User,
+            key:'id'
+        }
+    },
     amount:{type:Sequelize.FLOAT},
     account:{type:Sequelize.STRING}, // the phone number om/momo
     reference:{type:Sequelize.STRING},

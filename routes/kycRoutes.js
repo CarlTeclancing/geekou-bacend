@@ -1,9 +1,13 @@
 const express = require("express");
-const { submitKYC, updateKYC, DeleteKYC } = require("../controllers/kycControllers");
+const { addKyc, getAllKyc, getKyc, updateKyc, deleteKyc } = require("../controllers/kycControllers");
 const router = express.Router();
 
-router.post("/create", ()=>{});
-router.post("/update", ()=>{});
-router.post("/delete", ()=>{});
+router.route("/submit").post(addKyc)
+router.route("/").get(getAllKyc)
+
+router.route("/:id")
+.get(getKyc)
+.put(updateKyc)
+.delete(deleteKyc)
 
 module.exports = router;

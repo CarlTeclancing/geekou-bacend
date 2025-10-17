@@ -20,7 +20,7 @@ const cardRoutes = require('./routes/cardsRoutes');
 const transactionRoutes = require('./routes/transactionRoutes')
 
 app.use("/api/auth", authRoutes);
-app.use("/api/kyc", kycRoutes);
+app.use("/api/kyc",  isAuthenticated,kycRoutes);
 app.use("/api/card" ,isAuthenticated ,cardRoutes)
 app.use("/api/transaction" ,isAuthenticated ,transactionRoutes)
 
@@ -32,7 +32,9 @@ async function initializeAndStartServer() {
     console.log('✅ Database connection successful.');
 
     // 2. Table Synchronization (The long-running task)
-    await sequelize.sync({alter:true}); 
+    await sequelize.sync({alter:true});
+    // await sequelize.sync(); 
+
     console.log('🛠️ Database tables synced.');
     
 
