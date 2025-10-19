@@ -1,6 +1,6 @@
-const Card = require('../models/CardModel')
+const Transaction = require('../models/transactionModel')
 
-const createCard = async (req ,res) => {
+const addTransaction = async (req ,res) => {
     try{
         const {} = req.body
         
@@ -13,7 +13,7 @@ const createCard = async (req ,res) => {
 }
 
 
-const getCard = async (req ,res) => {
+const getTransaction = async (req ,res) => {
     try{
 
     }
@@ -25,7 +25,7 @@ const getCard = async (req ,res) => {
 
 
 
-const getAllCard = async (req ,res) => {
+const getAllTransaction = async (req ,res) => {
     try{
 
     }
@@ -36,7 +36,7 @@ const getAllCard = async (req ,res) => {
 }
 
 
-const updateCard = async (req ,res) => {
+const updateTransaction = async (req ,res) => {
     try{
 
     }
@@ -46,7 +46,7 @@ const updateCard = async (req ,res) => {
     }
 }
 
-const deleteCard = async (req ,res) => {
+const deleteTransaction = async (req ,res) => {
     try{
 
     }
@@ -57,4 +57,4 @@ const deleteCard = async (req ,res) => {
 }
 
 
-module.exports = {createCard, getAllCard ,getCard ,deleteCard ,updateCard}
+module.exports = {addTransaction, getAllTransaction ,getTransaction ,deleteTransaction ,updateTransaction}
