@@ -7,11 +7,6 @@ const addKyc = async (req ,res) => {
             return res.status(401).json({error:"All fields required"})
         }
 
-        // for files
-        // console.log(req.files);
-        
-
-        // if(phoneNumber[0] != 6 || phoneNumber.length != 9){return res.status(401).json({error:'invalid phone number'})}
         const tmp = await Kyc.create({...req.body ,userId:req.user})
         return res.status(201).json({kyc:tmp})
 
@@ -88,4 +83,56 @@ const deleteKyc = async (req ,res) => {
 }
 
 
-module.exports = {addKyc, getAllKyc ,getKyc ,deleteKyc ,updateKyc}
+// file uploads controller
+const uploadIdFront = async (req ,res) => {
+    try{
+        const tmp = await Kyc.find({where:{userId:req.user}})
+        console.log(req.file)
+        tmp.idCardFront = req.file.filename
+        return res.status(200).json({message:'File uploaded successfully'})
+    }
+    catch(e){
+        console.log(e);
+        return res.status(500).json({error:'Server error'})
+    }
+}
+const uploadIdBack = async (req ,res) => {
+    try{
+        const tmp = await Kyc.find({where:{userId:req.user}})
+        console.log(req.file)
+        tmp.idCardBack = req.file.filename
+        return res.status(200).json({message:'File uploaded successfully'})
+    }
+    catch(e){
+        console.log(e);
+        return res.status(500).json({error:'Server error'})
+    }
+}
+const uploadPicture = async (req ,res) => {
+    try{
+        const tmp = await Kyc.find({where:{userId:req.user}})
+        console.log(req.file)
+        tmp.picture= req.file.filename
+        return res.status(200).json({message:'File uploaded successfully'})
+    }
+    catch(e){
+        console.log(e);
+        return res.status(500).json({error:'Server error'})
+    }
+}
+const uploadNIU = async (req ,res) => {
+    try{
+        const tmp = await Kyc.find({where:{userId:req.user}})
+        console.log(req.file)
+        tmp.niu = req.file.filename
+        return res.status(200).json({message:'File uploaded successfully'})
+    }
+    catch(e){
+        console.log(e);
+        return res.status(500).json({error:'Server error'})
+    }
+}
+
+
+
+module.exports = {addKyc, getAllKyc ,getKyc ,deleteKyc ,updateKyc ,uploadIdBack ,uploadIdFront, uploadNIU, uploadPicture}

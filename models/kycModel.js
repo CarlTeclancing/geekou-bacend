@@ -25,6 +25,7 @@ const Kyc = sequelize.define('profiles' ,{
     idNumber:{type:Sequelize.STRING},
     phoneNumber:{type:Sequelize.STRING},
     // files
+    picture:{type:Sequelize.STRING},
     idCardFront:{type:Sequelize.STRING},
     idCardBack:{type:Sequelize.STRING},
     niu:{type:Sequelize.STRING},
