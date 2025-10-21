@@ -18,7 +18,7 @@ const Transaction = sequelize.define('transactions' ,{
     amount:{type:Sequelize.FLOAT},
     account:{type:Sequelize.STRING}, // the phone number om/momo
     reference:{type:Sequelize.STRING},
-    status:{type:Sequelize.STRING, enum:['pending' ,'success' ,'failed']},
+    status:{type:Sequelize.STRING, enum:['pending' ,'success' ,'failed'] ,default:'pending'},
     date:{type:Sequelize.DATE},
 
 })
