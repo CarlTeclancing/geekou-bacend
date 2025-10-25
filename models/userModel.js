@@ -10,7 +10,7 @@ const User = sequelize.define('users' ,{
     name:{type:Sequelize.STRING},
     email:{type:Sequelize.STRING ,unique:true},
     password:{type:Sequelize.STRING},
-    token:{type:Sequelize.TEXT}
+    swychr_user_id:{type:Sequelize.STRING}
 })
 
 module.exports = User
