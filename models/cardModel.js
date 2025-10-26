@@ -16,6 +16,8 @@ const Card = sequelize.define('cards' ,{
         }
     },
     balance:{type:Sequelize.FLOAT},
+    card_type:{type:Sequelize.STRING},
+    swychr_card_id:{type:Sequelize.STRING}
 
 })
 

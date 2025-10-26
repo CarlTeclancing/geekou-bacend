@@ -1,9 +1,8 @@
 const custom_request = require("./utils");
 
-
 // Card related services
 // card creation
-export const purchaseVirtualCard =  async (data) => {
+const purchaseVirtualCard =  async (data) => {
     try{
         const {user_id, card_type, amount} = data
         if(!user_id || !card_type || !amount){
@@ -19,7 +18,7 @@ export const purchaseVirtualCard =  async (data) => {
 }
 
 // const get all user's card
-export const getUserVirtualCard = async (data) => {
+const getUserVirtualCard = async (data) => {
     try{
         const {user_id} = data
         if(!user_id ){
@@ -35,7 +34,7 @@ export const getUserVirtualCard = async (data) => {
 }
 
 // get virtual card details
-export const getVirtualCardDetails = async(data) => {
+const getVirtualCardDetails = async(data) => {
     try{
         const {card_id} = data
         if(!card_id ){
@@ -53,7 +52,7 @@ export const getVirtualCardDetails = async(data) => {
 
 
 // recharge virtual card
-export const rechargeVirtualCard = async (data) => {
+const rechargeVirtualCard = async (data) => {
     try{
         const {card_id, amount} = data
         if(!card_id || !amount ){
@@ -70,7 +69,7 @@ export const rechargeVirtualCard = async (data) => {
 
 
 // Withdraw funds
-export const withdrawFunds = async(data) => {
+const withdrawFunds = async(data) => {
     try{
         const {card_id, amount} = data
         if(!card_id || !amount ){
@@ -86,7 +85,7 @@ export const withdrawFunds = async(data) => {
 }
 
 // Temporally freeze virtual card
-export const freezeVirtualCard = async(data) => {
+const freezeVirtualCard = async(data) => {
     try{
         const {card_id} = data
         if(!card_id  ){
@@ -103,7 +102,7 @@ export const freezeVirtualCard = async(data) => {
 
 
 // temporally unfreeze virtual card
-export const unFreezeVirtualCard = async (data) => {
+const unFreezeVirtualCard = async (data) => {
     try{
         const {card_id} = data
         if(!card_id ){
@@ -119,7 +118,7 @@ export const unFreezeVirtualCard = async (data) => {
 }
 
 // permantly block card
-export const blockCard = async (data) => {
+const blockCard = async (data) => {
     try{
         const {card_id} = data
         if(!card_id ){
@@ -135,7 +134,7 @@ export const blockCard = async (data) => {
 }
 
 // getting the transactions made by a card
-export const getCardTransaction = async (data) => {
+const getCardTransaction = async (data) => {
     try{
         const {card_id} = data
         if(!card_id ){
@@ -149,3 +148,5 @@ export const getCardTransaction = async (data) => {
         console.log(e.message);
     }    
 }
+
+module.exports = {purchaseVirtualCard, rechargeVirtualCard, withdrawFunds, getUserVirtualCard, getVirtualCardDetails, freezeVirtualCard, unFreezeVirtualCard, blockCard, getCardTransaction}

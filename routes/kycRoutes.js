@@ -2,7 +2,7 @@ const express = require("express");
 const multer = require('multer')
 const path = require('path')
 const {cwd} = require('process')
-const { addKyc, getAllKyc, getKyc, updateKyc, deleteKyc, uploadPicture, uploadIdFront, uploadIdBack, uploadNIU } = require("../controllers/kycControllers");
+const { addKyc, getAllKyc, getKyc, updateKyc, deleteKyc, uploadPicture, uploadIdFront, uploadIdBack, uploadNIU, checkKycValidity } = require("../controllers/kycControllers");
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -21,6 +21,7 @@ const uploads = multer({storage})
 
 router.route("/submit").post(addKyc)
 router.route("/").get(getAllKyc)
+router.get("/check-kyc-status/:user_id", checkKycValidity)
 
 // Files upload
 router.route("/upload-picture", uploads.single('file') ,uploadPicture)

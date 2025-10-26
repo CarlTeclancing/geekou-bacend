@@ -1,14 +1,36 @@
 const Kyc = require('../models/kycModel')
+const User = require('../models/userModel')
+const { createUserWithKyc, updateUser, checkUserValidity } = require('../services/swychr/userProvisioning')
 
 const addKyc = async (req ,res) => {
     try{
-        const {fullname ,dob, location ,idNumber ,phoneNumber} = req.body
-        if(!fullname || !dob || !location || !idNumber || !phoneNumber){
-            return res.status(401).json({error:"All fields required"})
+        const {dob, mobile, mobile_code, gender, address, street, city, postal_code, country, country_iso_code, id_proof_type, id_proof_no, id_proof_expiry_date ,id_proof_url_list , livelyness_img} = req.body
+        console.log(req.body);
+        
+        if(!dob || !mobile ||!mobile_code ||!gender ||!address || !street || !city || !postal_code || !country || !country_iso_code || !id_proof_type || !id_proof_no || !id_proof_expiry_date || !id_proof_url_list || !livelyness_img ){
+            return res.status(400).json({error:'All fields required for kyc creation'})
+        }
+        
+        const user = await User.findByPk(req.user)
+        const response = await createUserWithKyc({...req.body, name:user.name, email:user.email})
+        return console.log("the response OBJ of kyc creation: " ,response);
+        if(response.ok){
+
+        }else{
+
+        }
+        // const data = await response.json();
+        
+        if(response.ok){
+            user.swychr_user_id = data.user_id
+            await user.save()
+            
+            const tmp = await Kyc.create({...req.body ,userId:req.user})
+            return res.status(201).json({kyc:tmp})
+        }else{
+            return res.status(400).json({error:'Failed to save data'})
         }
 
-        const tmp = await Kyc.create({...req.body ,userId:req.user})
-        return res.status(201).json({kyc:tmp})
 
     }
     catch(e){
@@ -36,7 +58,6 @@ const getKyc = async (req ,res) => {
 }
 
 
-
 const getAllKyc = async (req ,res) => {
     try{
         const kyc = await Kyc.findAll()
@@ -52,16 +73,48 @@ const getAllKyc = async (req ,res) => {
     }
 }
 
+const checkKycValidity = async(req ,res)=>{
+    try{
+        const {user_id} = req.params
+        const user = await User.findByPk(user_id)
+        if(!user){return res.status(400).json({error:'Invalid user id'})}
+        const response = await checkUserValidity({user_id:user.swychr_user_id})
+        const data = response.json()
+        return console.log(data);
+        
+        if(response.ok){
+            // updating the user's kyc status
+            const kyc = await Kyc.find({where:{userId:user_id}})
+            kyc.active = true
+            kyc.status = 'success'
+        }else{
+            return res.status(400).json({error:'Failed to execute operation'})
+        }
+    }
+    catch(e){
+        console.log(e.message);
+        return res.status(500).json({error:'Server error'})
+    }
+}
+
 
 const updateKyc = async (req ,res) => {
     try{
         const {id} = req.params
-        const {fullname ,dob, location ,idNumber ,phoneNumber} = req.body
-        if(!fullname || !dob || !location || !idNumber || !phoneNumber){
-            return res.status(401).json({error:"All fields required"})
+        const {dob, mobile, mobile_code, gender, address, street, city, postal_code, country, country_iso_code, id_proof_type, id_proof_no, id_expiry_date} = req.body
+
+        const kyc = await Kyc.findByPk(id)
+        const user = await User.findByPk(useLayoutEffect.userId)
+        const respond = await updateUser({...req.body ,user_id:user.swychr_user_id})
+            const data = await response.json()
+        console.log(data);
+        
+        if(respond.ok){
+            const response = await Kyc.update({...req.body} ,{where:{id:id}})
+            return res.status(200).json(response)
+        }else{
+            return res.status(400).json(data)
         }
-        const response = await Kyc.update({...req.body} ,{where:{id:id}})
-        return res.status(200).json(response)
     
     }
     catch(e){
@@ -135,4 +188,4 @@ const uploadNIU = async (req ,res) => {
 
 
 
-module.exports = {addKyc, getAllKyc ,getKyc ,deleteKyc ,updateKyc ,uploadIdBack ,uploadIdFront, uploadNIU, uploadPicture}
+module.exports = {addKyc, getAllKyc ,getKyc ,deleteKyc ,updateKyc ,uploadIdBack ,uploadIdFront, uploadNIU, uploadPicture, checkKycValidity}
