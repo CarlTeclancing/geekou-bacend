@@ -32,9 +32,8 @@ async function initializeAndStartServer() {
     console.log('✅ Database connection successful.');
 
     // 2. Table Synchronization (The long-running task)
-    // await sequelize.sync({alter:true});
-    await sequelize.sync(); 
-
+    await sequelize.sync({alter:true});
+    // await sequelize.sync(); 
     console.log('🛠️ Database tables synced.');
     
 
