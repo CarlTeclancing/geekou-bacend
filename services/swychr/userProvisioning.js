@@ -44,10 +44,10 @@ const createUserWithKyc = async(data) => {
         const { email, name, dob, mobile, mobile_code, gender, address, street, city, postal_code, country, country_iso_code, id_proof_type, id_proof_no, id_proof_expiry_date, id_proof_url_list, livelyness_img} = data
         
         const response = await custom_request('create_full_user', data, 'post')
-        const res = await response.json()
-        console.log(response);
+        // const res = await response.json()
+        // console.log(response);
         
-        return res;
+        return response;
 
     }
     catch(e){
@@ -61,6 +61,7 @@ const checkUserValidity = async (data) => {
         const {user_id} = data
         if(!user_id){ throw new Error("No user id") }
         const response = await custom_request('check_user_validity', data, 'post')
+        return response
     }
     catch(e){
         console.log(e.message);

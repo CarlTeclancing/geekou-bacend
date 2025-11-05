@@ -5,12 +5,10 @@ const custom_request = require("./utils");
 const purchaseVirtualCard =  async (data) => {
     try{
         const {user_id, card_type, amount} = data
-        if(!user_id || !card_type || !amount){
-            throw new Error("All fields required")
-        }
-        const response = await custom_request('/vcard_purchase_card', data, 'post')
-        const res = await response.json()
-        return res;
+
+        const response = await custom_request('vcard_purchase_card', data, 'post')
+        // const res = await response.json()
+        return response;
     }
     catch(e){
         console.log(e.message);

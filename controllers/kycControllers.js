@@ -13,24 +13,23 @@ const addKyc = async (req ,res) => {
         
         const user = await User.findByPk(req.user)
         const response = await createUserWithKyc({...req.body, name:user.name, email:user.email})
-        return console.log("the response OBJ of kyc creation: " ,response);
+        // console.log("the response OBJ of kyc creation: " ,response);
+        const data = await response.json()
+        console.log(data);
+        // return
         if(response.ok){
-
-        }else{
-
-        }
-        // const data = await response.json();
-        
-        if(response.ok){
-            user.swychr_user_id = data.user_id
-            await user.save()
-            
-            const tmp = await Kyc.create({...req.body ,userId:req.user})
-            return res.status(201).json({kyc:tmp})
+            if(data.data){
+                user.swychr_user_id = data.data.id
+                await user.save()
+                
+                const tmp = await Kyc.create({...req.body ,userId:req.user})
+                return res.status(201).json({kyc:tmp})
+            }else{
+                return res.status(400).json({error:data.message})
+            }
         }else{
             return res.status(400).json({error:'Failed to save data'})
         }
-
 
     }
     catch(e){
@@ -79,14 +78,15 @@ const checkKycValidity = async(req ,res)=>{
         const user = await User.findByPk(user_id)
         if(!user){return res.status(400).json({error:'Invalid user id'})}
         const response = await checkUserValidity({user_id:user.swychr_user_id})
-        const data = response.json()
-        return console.log(data);
+        const data = await response.json()
+        // return console.log(data);
         
         if(response.ok){
             // updating the user's kyc status
-            const kyc = await Kyc.find({where:{userId:user_id}})
-            kyc.active = true
-            kyc.status = 'success'
+            // const kyc = await Kyc.findAll({where:{userId:user_id}})
+            // kyc.active = true
+            // kyc.status = 'success'
+            return res.status(data.status).json(data)
         }else{
             return res.status(400).json({error:'Failed to execute operation'})
         }

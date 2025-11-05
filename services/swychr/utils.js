@@ -3,27 +3,27 @@ const custom_request = async (end_point, body, method='get') => {
     switch(method){
         case 'get':
             console.log("============================");
-            console.log("sending a GET request to : ", `${process.env.PAYMENT_GATEWAY_BASE_URL}/${end_point}`);
+            console.log("sending a GET request to : ", `${process.env.CARD_GATEWAY_BASE_URL}/${end_point}`);
             console.log("============================");
             
-            return fetch(`${process.env.PAYMENT_GATEWAY_BASE_URL}/${end_point}` ,{
+            return fetch(`${process.env.CARD_GATEWAY_BASE_URL}/${end_point}` ,{
                 method:'GET',
                 headers:{
-                    'authorization':`Bearer ${process.env.SWYCHR_TOKEN}`
+                    'authorization':`Bearer ${process.env.CARD_TOKEN}`
                 }
             })
         break;
 
         case 'post':
             console.log("============================");
-            console.log("sending a POST request to : ", `${process.env.PAYMENT_GATEWAY_BASE_URL}/${end_point}`);
+            console.log("sending a POST request to : ", `${process.env.CARD_GATEWAY_BASE_URL}/${end_point}`);
             console.log("============================");
 
-            return fetch(`${process.env.PAYMENT_GATEWAY_BASE_URL}/${end_point}` ,{
+            return fetch(`${process.env.CARD_GATEWAY_BASE_URL}/${end_point}` ,{
                 method:'POST',
                 headers:{
                     'content-type':'application/json',
-                    'authorization':`Bearer ${process.env.SWYCHR_TOKEN}`
+                    'authorization':`Bearer ${process.env.CARD_TOKEN}`
                 },
                 body:JSON.stringify(body)
             })

@@ -5,16 +5,21 @@ const { purchaseVirtualCard, getVirtualCardDetails, getUserVirtualCard, recharge
 
 const createCard = async (req ,res) => {
     try{
-        const {card_type, amount} = req.body
-        const response = await purchaseVirtualCard({...req.body, user_id:req.user})
+        const {card_type, amount=0} = req.body
+        if( !card_type ){
+            return res.status(400).json({error:'All fields required'})
+        }
+
+        const user = User.findByPk(req.user)
+        const response = await purchaseVirtualCard({...req.body, user_id:user.swychr_user_id})
         const data = await response.json()
-        return console.log(data);
+        console.log(data);
         
-        if(response.ok){
+        if(data.status == 200){
             const card = await Card.create({userId:req.user, balance:amount, card_type, swychr_card_id:data.card_id})
             return res.status(200).json(card)
         }else{
-            return res.status(400).json({error:'Operation failed'})
+            return res.status(data.status).json({error:data.message})
         }
         
     }
