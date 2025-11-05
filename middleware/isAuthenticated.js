@@ -14,10 +14,14 @@ const isAuthenticated = async(req ,res ,next)=>{
         if(!token){return res.status(401).json({error:'Un-authorised'})}
 
         const user = await jwt.decode(token)
+        // console.log("the decoded token", user);
+        
 
         if(user){
-            const exists = User.findOne({where:{email:user?.email}})
-            if(exists){
+            const exists = await User.findOne({where:{email:user?.email}})
+            // console.log("the user in the middleware", exists);
+            
+            if(exists && user && user.id && exists.id == user.id){
                 req.user = user.id
                 next()
             }else{ return res.status(401).json({error:'Un-authorised'}) }

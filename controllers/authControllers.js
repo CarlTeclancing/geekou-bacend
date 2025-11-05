@@ -19,6 +19,7 @@ const register =async(req ,res)=>{
             const hash = await bcrypt.hash(password ,salt)
             
             const tmp = await User.create({email:email ,name:name,password:hash})
+            tmp.password = undefined
             return res.status(200).json({user:tmp})
         }
 
@@ -50,6 +51,7 @@ const login =async(req ,res)=>{
                 const data = user
                 delete data.password
                 delete data.token
+                delete data.swychr_user_id
                 return res.status(200).json({ access_token:token,user:data})
             }else{
                 return res.status(401).json({error:'Invalid email or password'})
