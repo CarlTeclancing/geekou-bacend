@@ -29,7 +29,7 @@ async function initializeAndStartServer() {
   try {
     // 1. Connection Check
     await sequelize.authenticate();
-    console.log('✅ Database connection successful.');
+    console.log('Database connection successful.');
 
     // 2. Table Synchronization (The long-running task)
     await sequelize.sync({alter:true});
@@ -41,11 +41,11 @@ async function initializeAndStartServer() {
     // 3. START THE SERVER ONLY NOW
     // The server is only available once the database is 100% ready.
     app.listen(PORT, () => {
-        console.log(`🚀 Server is running on http://localhost:${PORT}`);
+        console.log(` Server is running on http://localhost:${PORT}`);
     });
 
   } catch (error) {
-    console.error('❌ Critical startup failure:', error.message);
+    console.error('Critical startup failure:', error.message);
     // If the DB fails, there's no point running the app.
     process.exit(1); 
   }
