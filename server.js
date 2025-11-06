@@ -2,6 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 dotenv.config();
 const cors = require("cors");
+const path = require('path')
+const {cwd} = require('process')
 const sequelize = require('./db');
 
 
@@ -12,6 +14,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use("/file", express.static( path.join( cwd(), 'uploads' )))
 
 const isAuthenticated = require("./middleware/isAuthenticated");
 const authRoutes = require("./routes/authRoutes");
@@ -34,7 +38,6 @@ async function initializeAndStartServer() {
     // 2. Table Synchronization (The long-running task)
     await sequelize.sync({alter:true});
     // await sequelize.sync(); 
-
     console.log('🛠️ Database tables synced.');
     
 

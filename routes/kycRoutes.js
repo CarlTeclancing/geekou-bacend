@@ -2,16 +2,24 @@ const express = require("express");
 const multer = require('multer')
 const path = require('path')
 const {cwd} = require('process')
-const { addKyc, getAllKyc, getKyc, updateKyc, deleteKyc, uploadPicture, uploadIdFront, uploadIdBack, uploadNIU } = require("../controllers/kycControllers");
+const { addKyc, getAllKyc, getKyc, updateKyc, deleteKyc, uploadPicture, uploadIdFront, uploadIdBack, checkKycValidity, uploadPassport, submitKyc } = require("../controllers/kycControllers");
+const { mkdir, existsSync, mkdirSync } = require("fs");
 const router = express.Router();
 
 const storage = multer.diskStorage({
-    destination:(req ,file ,cb)=>{
-        const dest = path.join(cwd() ,'uploads')
-        return cb(null, dest)
+    destination:async(req ,file ,cb)=>{
+        console.log('the user id', req.user);
+        const file_dir = path.join(cwd(), 'uploads', req.user+"")
+        console.log("does file path exists: ",existsSync(file_dir));
+        
+        if(!existsSync(file_dir)){
+            await mkdirSync(file_dir, {recursive:true})
+            console.log("the created directory" ,file_dir);
+        }
+        return cb(null, file_dir)
     },
-    filename:(req ,file, cd)=>{
-        let random = (Math.random() *9)+1
+    filename:(req ,file, cb)=>{
+        let random = Math.floor( (Math.random() *9)+1 )
         let name = random+file.originalname
         return cb(null, name)
     }
@@ -19,14 +27,17 @@ const storage = multer.diskStorage({
 
 const uploads = multer({storage})
 
-router.route("/submit").post(addKyc)
+router.route("/save").post(addKyc)
+router.route("/submit").get(submitKyc)
+
 router.route("/").get(getAllKyc)
+router.get("/check-kyc-status/:user_id", checkKycValidity)
 
 // Files upload
-router.route("/upload-picture", uploads.single('file') ,uploadPicture)
-router.route("/upload-nid-front", uploads.single('file') ,uploadIdFront)
-router.route("/upload-nid-back", uploads.single('file') ,uploadIdBack)
-router.route("/upload-niu", uploads.single('file'), uploadNIU)
+router.post("/upload-picture", uploads.single('file') ,uploadPicture)
+router.post("/upload-nid-front", uploads.single('file') ,uploadIdFront)
+router.post("/upload-nid-back", uploads.single('file') ,uploadIdBack)
+router.post("/upload-passport", uploads.single('file'), uploadPassport)
 
 
 router.route("/:id")

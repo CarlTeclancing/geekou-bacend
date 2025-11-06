@@ -30,7 +30,7 @@ const Kyc = sequelize.define('profiles' ,{
     id_proof_type:{type:Sequelize.STRING},
     id_proof_no:{type:Sequelize.STRING},
     id_proof_expiry_date:{type:Sequelize.STRING},
-    id_proof_url_list:{type:Sequelize.STRING},
+    id_proof_url_list:{type:Sequelize.TEXT},
     livelyness_img:{type:Sequelize.STRING},
 
     status:{type:Sequelize.STRING ,enum:['pending' ,'failed', 'success'] ,default:'pending'},
@@ -38,8 +38,9 @@ const Kyc = sequelize.define('profiles' ,{
 
     fullName:{type:Sequelize.STRING},
     picture:{type:Sequelize.STRING},
-    id_proof_Front:{type:Sequelize.STRING},
-    id_proof_Back:{type:Sequelize.STRING},
+    id_proof_front:{type:Sequelize.STRING},
+    id_proof_back:{type:Sequelize.STRING},
+    passport_img:{type:Sequelize.STRING}
 })
 
 module.exports = Kyc

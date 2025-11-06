@@ -20,6 +20,7 @@ const Transaction = sequelize.define('transactions' ,{
     reference:{type:Sequelize.STRING},
     status:{type:Sequelize.STRING, enum:['pending' ,'success' ,'failed'] ,default:'pending'},
     date:{type:Sequelize.DATE},
+    type:{type:Sequelize.STRING, enum:['deposit', 'withdrawal' ,'fee','creation']}
 
 })
 
